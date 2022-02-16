@@ -1,2 +1,5 @@
-# lenguajes
-This repo is for the class lenguajes de programacion Feb - Jun 2022
+Chicago Bulls del 96'
+
+Jorge M A01633991
+Linda Abundis A01636416
+Oscar Fernandez A07013362
