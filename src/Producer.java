@@ -1,6 +1,3 @@
-
-
-
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,14 +23,14 @@ public class Producer extends Thread {
         System.out.println("Running Producer...");
         //Producir una vocal
         // Difinir string por vocales
-        String products = "AEIOU";
+        String[] products = {"(+ 1 1)", "(+ 1 2)", "(+ 1 3)", "(+ 1 4)"};
         // Random object
         Random r = new Random(System.currentTimeMillis());
-        char product;
+        String product;
         
         for(int i=0 ; i<5 ; i++) {
             // Get random char from products 
-            product = products.charAt(r.nextInt(5));
+            product = products[(r.nextInt(4))];
             //Store the product the original buffer from this object
             // No garantizado que el buffer tenga espacio
             // vaciar buffer si algun consumidor toma el producto
