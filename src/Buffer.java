@@ -7,11 +7,15 @@ public class Buffer {
     
     // Espacio, de tamano uno de tamano char solo uno a la vez
     private LinkedList<String> list;
-    int capacity = 2;
+    int capacity;
     
     Buffer() {
         // Forma vacia
         this.list = new LinkedList<>();
+    }
+    
+    public void setBufferSize(int bufferSize){
+        this.capacity = bufferSize;
     }
     
     synchronized String consume() {

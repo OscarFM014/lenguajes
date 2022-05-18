@@ -372,22 +372,37 @@ public class GUIFrame extends javax.swing.JFrame {
         return true;
         
     }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
+        
         
         boolean allRight = validateInputs();
         if(allRight){
             System.out.println("Iniciar");
-            Buffer buffer = new Buffer();
+            Buffer myBuffer = new Buffer();
+            myBuffer.setBufferSize(Integer.parseInt(jTextField5.getText()));
 
-            Producer producer1 = new Producer(buffer);
-            producer1.start();
-
-            Producer producer2 = new Producer(buffer);
-            producer2.start();
-
-            Consumer consumer = new Consumer(buffer);
-            consumer.start();
+            int prodAmount = Integer.parseInt(jTextField1.getText());
+            int consumAmount = Integer.parseInt(jTextField3.getText());
+            
+            for(int i= prodAmount; i>0; i--){
+                Producer myProducer = new Producer(myBuffer);
+                myProducer.setProdWaitTime(Integer.parseInt(jTextField2.getText()));
+                myProducer.start();
+            }
+            
+             for(int i= consumAmount; i>0; i--){
+                Consumer myConsumer = new Consumer(myBuffer);
+                myConsumer.setConsumWaitTime(Integer.parseInt(jTextField2.getText()));
+                myConsumer.start();
+            }
+             
+   
+            //.setNRange(Integer.parseInt(jTextField6.getText()));
+            //.setMRange(Integer.parseInt(jTextField7.getText()));
         }
         
         
@@ -466,7 +481,7 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

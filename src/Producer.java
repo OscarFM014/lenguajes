@@ -7,10 +7,18 @@ import java.util.logging.Logger;
 public class Producer extends Thread {
     Buffer buffer;
     
-    // Requieren un referencia del almacen ade donde van a estar trabajando (buffer)
+    private int prodWaitTime;
+    
     Producer(Buffer buffer) {
         this.buffer = buffer;
     }
+    
+    public void setProdWaitTime(int prodWaitTime){
+        this.prodWaitTime = prodWaitTime;
+    }
+    
+    // Requieren un referencia del almacen ade donde van a estar trabajando (buffer)
+    
     
     //Instancia de un hilo independiente
     //Metodo run que se puede ejecutar de manera parelela
@@ -28,7 +36,7 @@ public class Producer extends Thread {
         Random r = new Random(System.currentTimeMillis());
         String product;
         
-        for(int i=0 ; i<5 ; i++) {
+        for(;;) {
             // Get random char from products 
             product = products[(r.nextInt(4))];
             //Store the product the original buffer from this object
@@ -39,7 +47,7 @@ public class Producer extends Thread {
             // Buffer.print("Producer produced: " + product); //impresion sincronizada
             
             try {
-                Thread.sleep(1000);
+                Thread.sleep(prodWaitTime);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
