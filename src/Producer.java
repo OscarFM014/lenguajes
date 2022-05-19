@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 // Recibe same buffer as consumer from Buffer.java
 public class Producer extends Thread {
     Buffer buffer;
-    
     int prodWaitTime;
     
     Producer(Buffer buffer) {
@@ -19,11 +18,8 @@ public class Producer extends Thread {
     }
     
     // Requieren un referencia del almacen ade donde van a estar trabajando (buffer)
-    
-    
     //Instancia de un hilo independiente
     //Metodo run que se puede ejecutar de manera parelela
-    
     // Publica vacio run() sobreescribir
     
     @Override
@@ -54,5 +50,4 @@ public class Producer extends Thread {
             }
         }
     }
-    
 }

@@ -1,6 +1,3 @@
-
-
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +17,6 @@ public class Consumer extends Thread {
         this.consumWaitTime = consumWaitTime;
 
     }
-
     
     @Override
     public void run() {

@@ -1,4 +1,3 @@
-
 import javax.swing.JOptionPane;
 
 /*
@@ -13,7 +12,6 @@ import javax.swing.JOptionPane;
  */
 
 public class GUIFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form GUIFrame
      */

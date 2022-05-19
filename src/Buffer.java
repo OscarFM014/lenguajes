@@ -2,9 +2,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.LinkedList;
 
-
 public class Buffer {
-    
     // Espacio, de tamano uno de tamano char solo uno a la vez
     private LinkedList<String> list;
     int bufferSize;
@@ -33,16 +31,13 @@ public class Buffer {
         }
         //Consumir
         product = this.list.removeFirst();
-
         notifyAll();
-        
         return product;
     }
     
     
     // Generar contexto synchronized, concurrency-paralelism
     synchronized void produce(String product) {
-        System.out.println(bufferSize);
         while(this.list.size() == bufferSize) {
             try {
                 // wait() salir hasta que se pueda like a while
