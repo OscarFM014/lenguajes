@@ -9,16 +9,18 @@ import java.util.logging.Logger;
 public class Consumer extends Thread {
     Buffer buffer;
     
-    private int consumWaitTime;
+    int consumWaitTime;
     
     Consumer(Buffer buffer) {
         this.buffer = buffer;
     }
     
-    public void setConsumWaitTime(int consumWaitTime){
+    Consumer(Buffer buffer, int consumWaitTime) {
+        this.buffer = buffer;
         this.consumWaitTime = consumWaitTime;
+
     }
-    
+
     
     @Override
     public void run() {
@@ -31,7 +33,7 @@ public class Consumer extends Thread {
             //Buffer.print("Consumer consumed: " + product);
             
             try {
-                Thread.sleep(consumWaitTime);
+                Thread.sleep(this.consumWaitTime);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }

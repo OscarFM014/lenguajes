@@ -7,13 +7,14 @@ import java.util.logging.Logger;
 public class Producer extends Thread {
     Buffer buffer;
     
-    private int prodWaitTime;
+    int prodWaitTime;
     
     Producer(Buffer buffer) {
         this.buffer = buffer;
     }
     
-    public void setProdWaitTime(int prodWaitTime){
+    Producer(Buffer buffer, int prodWaitTime) {
+        this.buffer = buffer;
         this.prodWaitTime = prodWaitTime;
     }
     
@@ -47,7 +48,7 @@ public class Producer extends Thread {
             // Buffer.print("Producer produced: " + product); //impresion sincronizada
             
             try {
-                Thread.sleep(prodWaitTime);
+                Thread.sleep(this.prodWaitTime);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }

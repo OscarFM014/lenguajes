@@ -7,16 +7,19 @@ public class Buffer {
     
     // Espacio, de tamano uno de tamano char solo uno a la vez
     private LinkedList<String> list;
-    int capacity;
+    int bufferSize;
     
     Buffer() {
         // Forma vacia
         this.list = new LinkedList<>();
     }
     
-    public void setBufferSize(int bufferSize){
-        this.capacity = bufferSize;
+    Buffer(int bufferSize) {
+        // Forma vacia
+        this.list = new LinkedList<>();
+        this.bufferSize = bufferSize;
     }
+
     
     synchronized String consume() {
         String product;
@@ -39,7 +42,8 @@ public class Buffer {
     
     // Generar contexto synchronized, concurrency-paralelism
     synchronized void produce(String product) {
-        while(this.list.size() == capacity) {
+        System.out.println(bufferSize);
+        while(this.list.size() == bufferSize) {
             try {
                 // wait() salir hasta que se pueda like a while
                 // multiples productores en este punto de espera
