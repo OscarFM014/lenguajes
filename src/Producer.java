@@ -30,7 +30,10 @@ public class Producer extends Thread {
         
         for(int i=0 ; i<5 ; i++) {
             // Get random char from products 
-            product = products[(r.nextInt(4))];
+            //product = products[(r.nextInt(4))];
+            
+            product = GenerateRandomOperation();
+            
             //Store the product the original buffer from this object
             // No garantizado que el buffer tenga espacio
             // vaciar buffer si algun consumidor toma el producto
@@ -44,6 +47,27 @@ public class Producer extends Thread {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public String GenerateRandomOperation(){
+        String myOperation = "(";
+        Random r = new Random(System.currentTimeMillis());
+        String[] operatorOptions = {"+", "-", "*", "/"};
+        myOperation += operatorOptions[(r.nextInt(4))];
+        r = new Random(System.currentTimeMillis());
+        
+        myOperation += " ";
+                
+        String[] operandOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        myOperation += operandOptions[(r.nextInt(10))];
+        
+        myOperation += " ";
+                
+        myOperation += operandOptions[(r.nextInt(10))];
+        myOperation += ")";
+        
+        System.out.println(myOperation);
+        return "";
     }
     
 }
