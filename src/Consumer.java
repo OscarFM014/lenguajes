@@ -1,6 +1,3 @@
-
-
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,8 +6,16 @@ import java.util.logging.Logger;
 public class Consumer extends Thread {
     Buffer buffer;
     
+    int consumWaitTime;
+    
     Consumer(Buffer buffer) {
         this.buffer = buffer;
+    }
+    
+    Consumer(Buffer buffer, int consumWaitTime) {
+        this.buffer = buffer;
+        this.consumWaitTime = consumWaitTime;
+
     }
     
     @Override
@@ -18,13 +23,13 @@ public class Consumer extends Thread {
         System.out.println("Running Consumer...");
         String product;
         
-        for(int i=0 ; i<5 ; i++) {
+        for(;;) {
             product = this.buffer.consume();
             System.out.println("Consumer consumed: " + product);
             //Buffer.print("Consumer consumed: " + product);
             
             try {
-                Thread.sleep(1000);
+                Thread.sleep(this.consumWaitTime);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
             }

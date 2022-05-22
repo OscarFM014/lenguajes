@@ -1,4 +1,3 @@
-
 import javax.swing.JOptionPane;
 
 /*
@@ -13,7 +12,6 @@ import javax.swing.JOptionPane;
  */
 
 public class GUIFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form GUIFrame
      */
@@ -319,8 +317,8 @@ public class GUIFrame extends javax.swing.JFrame {
         }else if(c == evt.VK_ENTER){
             JOptionPane.showMessageDialog(rootPane, "Para envíar los datos seleccione 'Iniciar'");
         }
-        
     }
+    
     
     private boolean validateInputs() {
         boolean allRight = false;
@@ -365,29 +363,34 @@ public class GUIFrame extends javax.swing.JFrame {
             if(Integer.parseInt(jTextField6.getText()) > Integer.parseInt(jTextField7.getText())){
                 JOptionPane.showMessageDialog(rootPane, "En 'Rango de valores' ingrese un rango válido, n <= m ");
                 return false;
-            }
-           
-            
+            } 
         }
         return true;
-        
     }
+    
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+
         boolean allRight = validateInputs();
         if(allRight){
             System.out.println("Iniciar");
-            Buffer buffer = new Buffer();
-
-            Producer producer1 = new Producer(buffer);
-            producer1.start();
-
-            Producer producer2 = new Producer(buffer);
-            producer2.start();
-
-            Consumer consumer = new Consumer(buffer);
-            consumer.start();
+            Buffer myBuffer = new Buffer(Integer.parseInt(jTextField5.getText()));;
+            
+            int prodAmount = Integer.parseInt(jTextField1.getText());
+            int consumAmount = Integer.parseInt(jTextField3.getText());
+            
+            for(int i=prodAmount; i>0; i--){
+                Producer myProducer = new Producer(myBuffer, Integer.parseInt(jTextField2.getText()));
+                myProducer.start();
+            }
+            
+             for(int i=consumAmount; i>0; i--){
+                Consumer myConsumer = new Consumer(myBuffer, Integer.parseInt(jTextField4.getText()));
+                myConsumer.start();
+            }
+           
+            //.setNRange(Integer.parseInt(jTextField6.getText()));
+            //.setMRange(Integer.parseInt(jTextField7.getText()));
         }
         
         
@@ -466,7 +469,7 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
