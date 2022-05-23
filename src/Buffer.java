@@ -9,18 +9,21 @@ import java.util.logging.Logger;
 import java.util.LinkedList;
 
 
-public class Buffer {
+public class Buffer{
     
     // Espacio, de tamano uno de tamano char solo uno a la vez
     private LinkedList<String> list;
     int capacity = 2;
     
-    Process myPR;
+    //Process myPR;
     
-    Buffer() {
+    Buffer() throws IOException {
         // Forma vacia
         this.list = new LinkedList<>();
-        StartScheme();
+        //StartScheme();
+        
+        Scheme newScheme = new Scheme();
+        System.out.println(newScheme.SolveOperationScheme("(* 9 9)") );
     }
     
     synchronized String consume() {
@@ -61,6 +64,7 @@ public class Buffer {
         notifyAll();
     }
     
+    /*
     public void StartScheme(){
         Runtime runtime = Runtime.getRuntime();
         try {
@@ -76,12 +80,20 @@ public class Buffer {
             System.out.println("SORT OF : ");
             myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
             SolveOperationScheme(myPR, "(* 6 7)");
+            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
+            SolveOperationScheme(myPR, "(/ 0 0)");
+            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
+            SolveOperationScheme(myPR, "(/ 0 6)");
         } catch (IOException ex) {
             Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
     public Double SolveOperationScheme(Process pro, String operation) throws IOException{
+        if(operation.charAt(5) == '0'){
+            System.out.println("IMAGINARY DIVISION : 0");
+            return 0.0;
+        }
         System.out.println("Entered solving scheme operation : " + operation);
         
         BufferedWriter bWriter = 
@@ -122,8 +134,13 @@ public class Buffer {
             bWriter.flush();
             counter++;
         }
-        
+        System.out.println(answer.charAt(0));
         System.out.println("FINISHED SCHEME TEST");
-        return 0.0;
-    }
+        
+        answer = answer.substring(1);
+        Double.parseDouble(answer);
+        System.out.println("Answer : " + Double.parseDouble(answer));
+        //return 0.0;
+        return Double.parseDouble(answer);
+    }*/
 }

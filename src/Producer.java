@@ -30,9 +30,9 @@ public class Producer extends Thread {
         
         for(int i=0 ; i<5 ; i++) {
             // Get random char from products 
-            //product = products[(r.nextInt(4))];
+            product = products[(r.nextInt(4))];
             
-            product = GenerateRandomOperation();
+            //product = GenerateRandomOperation();
             
             //Store the product the original buffer from this object
             // No garantizado que el buffer tenga espacio
@@ -49,7 +49,7 @@ public class Producer extends Thread {
         }
     }
     
-    public String GenerateRandomOperation(){
+    /*public String GenerateRandomOperation(){
         String myOperation = "(";
         Random r = new Random(System.currentTimeMillis());
         String[] operatorOptions = {"+", "-", "*", "/"};
@@ -62,12 +62,13 @@ public class Producer extends Thread {
         myOperation += operandOptions[(r.nextInt(10))];
         
         myOperation += " ";
-                
+        
         myOperation += operandOptions[(r.nextInt(10))];
         myOperation += ")";
         
         System.out.println(myOperation);
         return "";
     }
+    */
     
 }
