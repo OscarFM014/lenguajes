@@ -52,7 +52,7 @@ public class Buffer {
         myvalues.add(Integer.toString(idprocesor));
         this.list.add(myvalues);
         
-       GUIFrame.updateJTable1(this.list);
+       GUIFrame.updateJTable1(this.list, this.bufferSize);
         
         notifyAll();
     }

@@ -224,6 +224,7 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel8.setText("Tareas realizadas");
 
         jProgressBar1.setValue(50);
+        jProgressBar1.setStringPainted(true);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -371,8 +372,7 @@ public class GUIFrame extends javax.swing.JFrame {
         return true;
     }
     
-    public static void updateJTable1(LinkedList<ArrayList <String>> products){
-        //System.out.println(currentValuesProducer.toString());
+    public static void updateJTable1(LinkedList<ArrayList <String>> products, int bufferSize){
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         model.setRowCount(0);
         
@@ -385,8 +385,7 @@ public class GUIFrame extends javax.swing.JFrame {
                 }
             );
         }
-
-        System.out.println(products.size());
+        jProgressBar1.setValue((int) (((products.size() * 1.0)/(bufferSize*1.0))*100));
         
     }
     
@@ -401,7 +400,7 @@ public class GUIFrame extends javax.swing.JFrame {
                   product.get(2),
             }
         );
-        System.out.println(solved);
+        jSpinner4.setValue(solved);
     }
     
    
@@ -522,10 +521,10 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JProgressBar jProgressBar1;
+    private static javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner4;
+    private static javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
     public static javax.swing.JTable jTable1;
     public static javax.swing.JTable jTable2;
