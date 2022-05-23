@@ -1,5 +1,9 @@
 import javax.swing.JOptionPane;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +19,11 @@ public class GUIFrame extends javax.swing.JFrame {
     /**
      * Creates new form GUIFrame
      */
+    
+    public static int solved = 0;
+    
+
+    
     public GUIFrame() {
         initComponents();
     }
@@ -191,27 +200,21 @@ public class GUIFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Configuración", jPanel2);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+            new Object [][] {},
+            new String[] {
+                "IdProcesor", "Operación"
             }
+            
         ));
         jScrollPane1.setViewportView(jTable1);
 
+
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdConsumer", "Operación", "Resultado"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -368,6 +371,40 @@ public class GUIFrame extends javax.swing.JFrame {
         return true;
     }
     
+    public static void updateJTable1(LinkedList<ArrayList <String>> products){
+        //System.out.println(currentValuesProducer.toString());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        for (int i = 0; i < products.size(); i++) {
+            System.out.println();
+            model.addRow(
+            new Object[]{
+                    products.get(i).get(1), 
+                    products.get(i).get(0), 
+                }
+            );
+        }
+
+        System.out.println(products.size());
+        
+    }
+    
+    
+    public static void updateJTable2(ArrayList <String> product){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        solved++;
+        model.addRow(
+            new Object[]{
+                  product.get(0), 
+                  product.get(1), 
+                  product.get(2),
+            }
+        );
+        System.out.println(solved);
+    }
+    
+   
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -381,18 +418,19 @@ public class GUIFrame extends javax.swing.JFrame {
             
             for(int i=prodAmount; i>0; i--){
                 Producer myProducer = new Producer(myBuffer, Integer.parseInt(jTextField2.getText()));
+                int idProcesor = myProducer.hashCode();
+                myProducer.setIdProcesor(idProcesor);
                 myProducer.start();
             }
             
              for(int i=consumAmount; i>0; i--){
                 Consumer myConsumer = new Consumer(myBuffer, Integer.parseInt(jTextField4.getText()));
+                int idConsumer = myConsumer.hashCode();
+                myConsumer.setIdConsumer(idConsumer);
                 myConsumer.start();
             }
-           
-            //.setNRange(Integer.parseInt(jTextField6.getText()));
-            //.setMRange(Integer.parseInt(jTextField7.getText()));
+
         }
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -489,8 +527,8 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    public static javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
