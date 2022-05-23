@@ -17,35 +17,23 @@ public class Scheme {
     public Scheme(){
         Runtime runtime = Runtime.getRuntime();
         try {
-            //Runtime rt = Runtime.getRuntime();
             rt = Runtime.getRuntime();
+            commands = new String[]{"Path"};
+            myPR = rt.exec(commands, null, new File("Path"));
 
-            //String[] commands = {"C:\\Program Files\\Racket\\Racket.exe"};
-            commands = new String[]{"C:\\Program Files\\Racket\\Racket.exe"};
-            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
-
-            /*SolveOperationScheme(myPR, "(+ 1 2)");
-            //Double t1 = SolveOperationScheme(myPR, "(+ 5 8)");
-            //t1 += 20;
-            System.out.println("SORT OF : ");
-            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
-            SolveOperationScheme(myPR, "(* 6 7)");
-            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
-            SolveOperationScheme(myPR, "(/ 0 0)");
-            myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
-            SolveOperationScheme(myPR, "(/ 0 6)");*/
+            
         } catch (IOException ex) {
             Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    //public Double SolveOperationScheme(Process pro, String operation) throws IOException{
     public Double SolveOperationScheme(String operation) throws IOException{
-        myPR = rt.exec(commands, null, new File("C:\\Program Files\\Racket\\"));
+        myPR = rt.exec(commands, null, new File("Path"));
         if(operation.charAt(5) == '0'){
             System.out.println("IMAGINARY DIVISION : 0");
             return 0.0;
         }
+        
         System.out.println("Entered solving scheme operation : " + operation);
         
         BufferedWriter bWriter = 
@@ -61,23 +49,16 @@ public class Scheme {
         
         System.out.println("Reached 3");
         
-        String answer = null;
+        String answer = stdInput.readLine();
         int counter = 0;
         
-        //System.out.println("About to enter while " + stdInput.readLine());
+        System.out.println("About to enter while " + stdInput.readLine());
         
         while ((answer = stdInput.readLine()) != null && counter < 2) {
-        //while ( stdInput.ready() && counter < 2) {
-            //answer = stdInput.readLine();
+
             System.out.println(answer);
             System.out.println("COOL");
-            //pr = rt.exec("help");
-            //pr = rt.exec("5");
-            //rt.exec("(+ 1 2)");
-            //rt.exec("Hola");
-
-            //p_stdin.write("( + 6 2)");
-            //p_stdin.write(GenerateRandomOperation());
+          
             String Operation = operation;
             System.err.println("CHECKING: " + Operation + "dONE");
             bWriter.write(Operation);
@@ -92,28 +73,28 @@ public class Scheme {
         answer = answer.substring(1);
         Double.parseDouble(answer);
         System.out.println("Answer : " + Double.parseDouble(answer));
-        //return 0.0;
         return Double.parseDouble(answer);
     }
     
-    public String GenerateRandomOperation(){
+    public String GenerateRandomOperation(int min, int max){
         String myOperation = "(";
         Random r = new Random(System.currentTimeMillis());
         String[] operatorOptions = {"+", "-", "*", "/"};
         myOperation += operatorOptions[(r.nextInt(4))];
-        r = new Random(System.currentTimeMillis());
-        
-        myOperation += " ";
-                
-        String[] operandOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        myOperation += operandOptions[(r.nextInt(10))];
-        
+
         myOperation += " ";
         
-        myOperation += operandOptions[(r.nextInt(10))];
+        
+        
+        String num1 = Integer.toString((int)Math.floor(Math.random()*(max-min+1)+min));
+        myOperation += num1;
+        
+        myOperation += " ";
+        
+        String num2 = Integer.toString((int)Math.floor(Math.random()*(max-min+1)+min));
+        myOperation += num2;
         myOperation += ")";
         
-        System.out.println(myOperation);
-        return "";
+        return myOperation;
     }
 }

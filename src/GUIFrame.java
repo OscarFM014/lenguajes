@@ -1,5 +1,8 @@
-
 import javax.swing.JOptionPane;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,10 +16,13 @@ import javax.swing.JOptionPane;
  */
 
 public class GUIFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form GUIFrame
      */
+    
+    public static int solved = 0;
+    
+
     public GUIFrame() {
         initComponents();
     }
@@ -193,27 +199,21 @@ public class GUIFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Configuración", jPanel2);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+            new Object [][] {},
+            new String[] {
+                "IdProcesor", "Operación"
             }
+            
         ));
         jScrollPane1.setViewportView(jTable1);
 
+
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdConsumer", "Operación", "Resultado"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -223,6 +223,7 @@ public class GUIFrame extends javax.swing.JFrame {
         jLabel8.setText("Tareas realizadas");
 
         jProgressBar1.setValue(50);
+        jProgressBar1.setStringPainted(true);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -319,8 +320,8 @@ public class GUIFrame extends javax.swing.JFrame {
         }else if(c == evt.VK_ENTER){
             JOptionPane.showMessageDialog(rootPane, "Para envíar los datos seleccione 'Iniciar'");
         }
-        
     }
+    
     
     private boolean validateInputs() {
         boolean allRight = false;
@@ -365,31 +366,73 @@ public class GUIFrame extends javax.swing.JFrame {
             if(Integer.parseInt(jTextField6.getText()) > Integer.parseInt(jTextField7.getText())){
                 JOptionPane.showMessageDialog(rootPane, "En 'Rango de valores' ingrese un rango válido, n <= m ");
                 return false;
-            }
-           
-            
+            } 
         }
         return true;
+    }
+    
+    public static void updateJTable1(LinkedList<ArrayList <String>> products, int bufferSize){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        for (int i = 0; i < products.size(); i++) {
+            System.out.println();
+            model.addRow(
+            new Object[]{
+                    products.get(i).get(1), 
+                    products.get(i).get(0), 
+                }
+            );
+        }
+        jProgressBar1.setValue((int) (((products.size() * 1.0)/(bufferSize*1.0))*100));
         
     }
+    
+    
+    public static void updateJTable2(ArrayList <String> product){
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        solved++;
+        model.addRow(
+            new Object[]{
+                  product.get(0), 
+                  product.get(1), 
+                  product.get(2),
+            }
+        );
+        jSpinner4.setValue(solved);
+    }
+    
+   
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+
         boolean allRight = validateInputs();
         if(allRight){
             System.out.println("Iniciar");
-            Buffer buffer = new Buffer();
+            Buffer myBuffer = new Buffer(Integer.parseInt(jTextField5.getText()));;
+            
+            int prodAmount = Integer.parseInt(jTextField1.getText());
+            int consumAmount = Integer.parseInt(jTextField3.getText());
+            
+            String num1 = jTextField6.getText();
+            String num2 = jTextField7.getText();
+            
+            for(int i=prodAmount; i>0; i--){
+                Producer myProducer = new Producer(myBuffer, Integer.parseInt(jTextField2.getText()));
+                int idProcesor = myProducer.hashCode();
+                myProducer.setIdProcesor(idProcesor);
+                myProducer.setNumbers(num1, num2);
+                myProducer.start();
+            }
+            
+             for(int i=consumAmount; i>0; i--){
+                Consumer myConsumer = new Consumer(myBuffer, Integer.parseInt(jTextField4.getText()));
+                int idConsumer = myConsumer.hashCode();
+                myConsumer.setIdConsumer(idConsumer);
+                myConsumer.start();
+            }
 
-            Producer producer1 = new Producer(buffer);
-            producer1.start();
-
-            Producer producer2 = new Producer(buffer);
-            producer2.start();
-
-            Consumer consumer = new Consumer(buffer);
-            consumer.start();
         }
-        
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -466,7 +509,7 @@ public class GUIFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -481,13 +524,13 @@ public class GUIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JProgressBar jProgressBar1;
+    private static javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSpinner jSpinner4;
+    private static javax.swing.JSpinner jSpinner4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    public static javax.swing.JTable jTable1;
+    public static javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
