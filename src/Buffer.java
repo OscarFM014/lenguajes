@@ -1,26 +1,23 @@
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.LinkedList;
+import java.util.*;
 
 public class Buffer {
     // Espacio, de tamano uno de tamano char solo uno a la vez
-    private LinkedList<String> list;
+    private LinkedList<ArrayList <String>> list;
     int bufferSize;
     
     Buffer() {
-        // Forma vacia
         this.list = new LinkedList<>();
     }
     
-    Buffer(int bufferSize) {
-        // Forma vacia
+    Buffer(int bufferSize) { 
         this.list = new LinkedList<>();
         this.bufferSize = bufferSize;
     }
-
     
-    synchronized String consume() {
-        String product;
+    synchronized ArrayList<String> consume(int idconsumer) {
+        ArrayList<String> product;
         
         while(this.list.isEmpty()) {
             try {
@@ -31,13 +28,15 @@ public class Buffer {
         }
         //Consumir
         product = this.list.removeFirst();
+        product.add(Integer.toString(idconsumer));
+            
         notifyAll();
         return product;
     }
     
     
     // Generar contexto synchronized, concurrency-paralelism
-    synchronized void produce(String product) {
+    synchronized void produce(String product, int idprocesor) {
         while(this.list.size() == bufferSize) {
             try {
                 // wait() salir hasta que se pueda like a while
@@ -48,10 +47,14 @@ public class Buffer {
                 Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        this.list.add(product);
-        System.out.println(this.list.toString());
+        ArrayList<String> myvalues = new ArrayList<>();
+        myvalues.add(product);
+        myvalues.add(Integer.toString(idprocesor));
+        this.list.add(myvalues);
         
-        // mas de un productor o consumidor
+       GUIFrame.updateJTable1(this.list);
+        
         notifyAll();
     }
+
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,6 +8,7 @@ public class Consumer extends Thread {
     Buffer buffer;
     
     int consumWaitTime;
+    int idConsumer;
     
     Consumer(Buffer buffer) {
         this.buffer = buffer;
@@ -18,15 +20,24 @@ public class Consumer extends Thread {
 
     }
     
+    public void setIdConsumer(int idConsumer){
+        this.idConsumer = idConsumer;
+    }
+    
+    
     @Override
     public void run() {
         System.out.println("Running Consumer...");
-        String product;
+        ArrayList<String> product = new ArrayList<>();
         
         for(;;) {
-            product = this.buffer.consume();
-            System.out.println("Consumer consumed: " + product);
-            //Buffer.print("Consumer consumed: " + product);
+            product = this.buffer.consume(this.idConsumer);
+            ArrayList<String> res = new ArrayList<>();
+            res.add(Integer.toString(this.idConsumer));
+            res.add(product.get(0));
+            res.add("Resultado");
+
+            GUIFrame.updateJTable2(res);
             
             try {
                 Thread.sleep(this.consumWaitTime);

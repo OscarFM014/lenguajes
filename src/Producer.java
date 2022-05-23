@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 public class Producer extends Thread {
     Buffer buffer;
     int prodWaitTime;
+    int idProcesor;
     
     Producer(Buffer buffer) {
         this.buffer = buffer;
@@ -15,6 +16,10 @@ public class Producer extends Thread {
     Producer(Buffer buffer, int prodWaitTime) {
         this.buffer = buffer;
         this.prodWaitTime = prodWaitTime;
+    }
+    
+    public void setIdProcesor(int idProcesor){
+        this.idProcesor = idProcesor;
     }
     
     // Requieren un referencia del almacen ade donde van a estar trabajando (buffer)
@@ -39,8 +44,8 @@ public class Producer extends Thread {
             //Store the product the original buffer from this object
             // No garantizado que el buffer tenga espacio
             // vaciar buffer si algun consumidor toma el producto
-            this.buffer.produce(product);
-            System.out.println("Producer produced: " + product);
+            this.buffer.produce(product, this.idProcesor);
+            // System.out.println("Producer produced: " + product);
             // Buffer.print("Producer produced: " + product); //impresion sincronizada
             
             try {
