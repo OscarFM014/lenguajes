@@ -90,7 +90,7 @@ public class Scheme {
         //return 5.0;
     }
     
-    public Double SolveOperationManual(String operation)throws IOException{
+        public Double SolveOperationManual(String operation)throws IOException{
         Double answer = 0.0;
         Double f1, f2;
         if(operation.charAt(5) == '0'){

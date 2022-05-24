@@ -44,7 +44,8 @@ public class Producer extends Thread {
             try {
                 Thread.sleep(this.prodWaitTime);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                Thread.currentThread().interrupt(); // restore interrupted status
+                break;
             }
         }
     }
