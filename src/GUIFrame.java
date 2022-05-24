@@ -409,22 +409,15 @@ public class GUIFrame extends javax.swing.JFrame {
         model.setRowCount(0);
 
         for (int i = 0; i < products.size(); i++) {
-            System.out.println();
-            try{
+            try {
                 model.addRow(
-                    new Object[] {
-                            products.get(i).get(1),
-                            products.get(i).get(0),
-                    }
-                );
-            }catch(Error e){
-                e.printStackTrace();
+                        new Object[] {
+                                products.get(i).get(1),
+                                products.get(i).get(0),
+                        });
+            } catch (Error e) {
+               e.toString();
             }
-            model.addRow(
-                    new Object[] {
-                            products.get(i).get(1),
-                            products.get(i).get(0),
-                    });
         }
         jProgressBar1.setValue((int) (((products.size() * 1.0) / (bufferSize * 1.0)) * 100));
 
@@ -433,18 +426,17 @@ public class GUIFrame extends javax.swing.JFrame {
     public static void updateJTable2(ArrayList<String> product) {
         DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
         solved++;
-        try{
+        try {
             model.addRow(
-                new Object[] {
-                        product.get(0),
-                        product.get(1),
-                        product.get(2),
-                }
-            );
-        }catch(Error e){
-            e.printStackTrace();
+                    new Object[] {
+                            product.get(0),
+                            product.get(1),
+                            product.get(2),
+                    });
+        } catch (Error e) {
+            e.toString();
         }
-        
+
         jSpinner4.setValue(solved);
     }
 
@@ -452,17 +444,19 @@ public class GUIFrame extends javax.swing.JFrame {
 
         boolean allRight = validateInputs();
         if (allRight) {
-            System.out.println("Iniciar");
             Buffer myBuffer = new Buffer(Integer.parseInt(jTextField5.getText()));
-            
 
             int prodAmount = Integer.parseInt(jTextField1.getText());
             int consumAmount = Integer.parseInt(jTextField3.getText());
+
+            String num1 = jTextField6.getText();
+            String num2 = jTextField7.getText();
 
             for (int i = prodAmount; i > 0; i--) {
                 Producer myProducer = new Producer(myBuffer, Integer.parseInt(jTextField2.getText()));
                 int idProcesor = myProducer.hashCode();
                 myProducer.setIdProcesor(idProcesor);
+                myProducer.setNumbers(num1, num2);
                 myProducer.start();
                 producers.add(myProducer);
             }
@@ -479,17 +473,12 @@ public class GUIFrame extends javax.swing.JFrame {
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
-        System.out.println("Detener");
 
         for (Consumer consumer : consumers) {
-            System.out.println(consumer.hashCode());
             consumer.interrupt();
         }
 
         for (Producer producer : producers) {
-            System.out.println(producer.hashCode());
-
             producer.interrupt();
         }
     }

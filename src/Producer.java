@@ -1,14 +1,12 @@
-import java.util.Random;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// Nuevo hilo de procesamiento
-// Recibe same buffer as consumer from Buffer.java
-public class Producer extends Thread implements Runnable {
+public class Producer extends Thread {
     Buffer buffer;
     int prodWaitTime;
     int idProcesor;
-    // to stop the thread
+    String num1, num2;
 
     Producer(Buffer buffer) {
         this.buffer = buffer;
@@ -23,41 +21,30 @@ public class Producer extends Thread implements Runnable {
         this.idProcesor = idProcesor;
     }
 
-    // Requieren un referencia del almacen ade donde van a estar trabajando (buffer)
-    // Instancia de un hilo independiente
-    // Metodo run que se puede ejecutar de manera parelela
-    // Publica vacio run() sobreescribir
+    public void setNumbers(String num1, String num2) {
+        this.num1 = num1;
+        this.num2 = num2;
+    }
 
     @Override
     public void run() {
-        // Anunciar la ejecucion
-        System.out.println("Running Producer...");
-        // Producir una vocal
-        // Difinir string por vocales
-        String[] products = { "(+ 1 1)", "(+ 1 2)", "(+ 1 3)", "(+ 1 4)" };
-        // Random object
-        Random r = new Random(System.currentTimeMillis());
+        Scheme newScheme = new Scheme();
+
         String product;
 
         for (;;) {
-            // Get random char from products
-            product = products[(r.nextInt(4))];
 
-            // product = GenerateRandomOperation();
+            product = newScheme.GenerateRandomOperation(Integer.parseInt(this.num1), Integer.parseInt(this.num2));
 
-            // Store the product the original buffer from this object
-            // No garantizado que el buffer tenga espacio
-            // vaciar buffer si algun consumidor toma el producto
             this.buffer.produce(product, this.idProcesor);
-            // System.out.println("Producer produced: " + product);
-            // Buffer.print("Producer produced: " + product); //impresion sincronizada
 
             try {
                 Thread.sleep(this.prodWaitTime);
             } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt(); // restore interrupted status
+                Thread.currentThread().interrupt(); 
                 break;
             }
         }
     }
+
 }
