@@ -14,12 +14,14 @@ public class Scheme {
     Process myPR;
     Runtime rt;
     String[] commands;
+    String FilePath = "";
+    String RacketExecPath = "";
     public Scheme(){
         Runtime runtime = Runtime.getRuntime();
         try {
             rt = Runtime.getRuntime();
-            commands = new String[]{"Path"};
-            myPR = rt.exec(commands, null, new File("Path"));
+            commands = new String[]{RacketExecPath};
+            myPR = rt.exec(commands, null, new File(this.FilePath));
 
             
         } catch (IOException ex) {
@@ -28,7 +30,7 @@ public class Scheme {
     }
     
     public Double SolveOperationScheme(String operation) throws IOException{
-        myPR = rt.exec(commands, null, new File("Path"));
+        myPR = rt.exec(commands, null, new File(this.FilePath));
         if(operation.charAt(5) == '0'){
             System.out.println("IMAGINARY DIVISION : 0");
             return 0.0;
