@@ -1,5 +1,3 @@
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.*;
 
 public class Buffer {
@@ -23,10 +21,11 @@ public class Buffer {
             try {
                 wait();
             } catch (InterruptedException ex) {
-                Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
+                Thread.currentThread().interrupt();
+                break;
             }
         }
- 
+        
         product = this.list.removeFirst();
         product.add(Integer.toString(idconsumer));
 
@@ -38,10 +37,10 @@ public class Buffer {
     synchronized void produce(String product, int idprocesor) {
         while (this.list.size() == bufferSize) {
             try {
-   
                 wait();
             } catch (InterruptedException ex) {
-                Logger.getLogger(Buffer.class.getName()).log(Level.SEVERE, null, ex);
+                Thread.currentThread().interrupt();
+                break;
             }
         }
         ArrayList<String> myvalues = new ArrayList<>();

@@ -415,12 +415,12 @@ public class GUIFrame extends javax.swing.JFrame {
                                 products.get(i).get(1),
                                 products.get(i).get(0),
                         });
+                jProgressBar1.setValue((int) (((products.size() * 1.0) / (bufferSize * 1.0)) * 100));
             } catch (Error e) {
                e.toString();
             }
         }
-        jProgressBar1.setValue((int) (((products.size() * 1.0) / (bufferSize * 1.0)) * 100));
-
+        
     }
 
     public static void updateJTable2(ArrayList<String> product) {
@@ -433,11 +433,11 @@ public class GUIFrame extends javax.swing.JFrame {
                             product.get(1),
                             product.get(2),
                     });
+            jSpinner4.setValue(solved);
         } catch (Error e) {
             e.toString();
         }
-
-        jSpinner4.setValue(solved);
+        
     }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
