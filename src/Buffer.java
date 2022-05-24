@@ -12,7 +12,6 @@ public class Buffer {
         this.list = new LinkedList<>();
         // StartScheme();
 
-        
     }
 
     Buffer(int bufferSize) {
