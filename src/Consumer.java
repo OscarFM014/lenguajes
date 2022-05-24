@@ -1,10 +1,5 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-// Same struct as Producer.java
-// Recibe same buffer as producer from buffer.java
 public class Consumer extends Thread {
     Buffer buffer;
     
@@ -29,19 +24,14 @@ public class Consumer extends Thread {
     
     @Override
     public void run() {
-        System.out.println("Running Consumer...");
         ArrayList<String> product = new ArrayList<>();
         Scheme newScheme = new Scheme();
         
         for(;;) {
             product = this.buffer.consume(this.idConsumer);
             
-        
-            try {
-                this.resultado = Double.toString(newScheme.SolveOperationManual(product.get(0)));
-            } catch (IOException ex) {
-                Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            this.resultado = Double.toString(newScheme.SolveOperationManual(product.get(0)));
+            
             ArrayList<String> res = new ArrayList<>();
             res.add(Integer.toString(this.idConsumer));
             res.add(product.get(0));
@@ -52,7 +42,8 @@ public class Consumer extends Thread {
             try {
                 Thread.sleep(this.consumWaitTime);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                Thread.currentThread().interrupt();
+                break;
             }
         }
     }

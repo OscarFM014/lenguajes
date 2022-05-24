@@ -28,9 +28,6 @@ public class Producer extends Thread {
 
     @Override
     public void run() {
-
-        System.out.println("Running Producer...");
-
         Scheme newScheme = new Scheme();
 
         String product;
@@ -44,32 +41,10 @@ public class Producer extends Thread {
             try {
                 Thread.sleep(this.prodWaitTime);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Producer.class.getName()).log(Level.SEVERE, null, ex);
+                Thread.currentThread().interrupt(); 
+                break;
             }
         }
     }
-
-    /*
-     * public String GenerateRandomOperation(){
-     * String myOperation = "(";
-     * Random r = new Random(System.currentTimeMillis());
-     * String[] operatorOptions = {"+", "-", "*", "/"};
-     * myOperation += operatorOptions[(r.nextInt(4))];
-     * r = new Random(System.currentTimeMillis());
-     * 
-     * myOperation += " ";
-     * 
-     * String[] operandOptions = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-     * myOperation += operandOptions[(r.nextInt(10))];
-     * 
-     * myOperation += " ";
-     * 
-     * myOperation += operandOptions[(r.nextInt(10))];
-     * myOperation += ")";
-     * 
-     * System.out.println(myOperation);
-     * return "";
-     * }
-     */
 
 }
