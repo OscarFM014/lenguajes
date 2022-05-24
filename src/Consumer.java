@@ -31,13 +31,14 @@ public class Consumer extends Thread {
     public void run() {
         System.out.println("Running Consumer...");
         ArrayList<String> product = new ArrayList<>();
+        Scheme newScheme = new Scheme();
         
         for(;;) {
             product = this.buffer.consume(this.idConsumer);
-            Scheme newScheme = new Scheme();
+            
         
             try {
-                this.resultado = Double.toString(newScheme.SolveOperationScheme(product.get(0)));
+                this.resultado = Double.toString(newScheme.SolveOperationManual(product.get(0)));
             } catch (IOException ex) {
                 Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
             }
